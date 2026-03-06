@@ -3,6 +3,7 @@ import { useUser, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Dashboard() {
   const { isLoaded, isSignedIn } = useUser();
@@ -16,31 +17,38 @@ export default function Dashboard() {
 
   if (!isLoaded || !isSignedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 to-purple-900">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>
+          <p className="mt-4 text-purple-200">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900">
       {/* Header */}
-      <header className="bg-white shadow-sm h-16 flex justify-between px-6 items-center border-b border-gray-200">
-        <Link href="/" className="text-2xl font-bold text-black">
-          My Wardrobe AI
+      <header className="bg-black/40 backdrop-blur-md shadow-sm h-16 flex justify-between px-6 items-center border-b border-purple-500/20">
+        <Link href="/" className="flex items-center gap-2">
+          <Image 
+            src="/logo.webp" 
+            alt="ALT FIT Logo" 
+            width={32} 
+            height={32}
+            className="w-8 h-8"
+          />
+          <span className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent">ALT FIT</span>
         </Link>
         <div className="flex gap-4 items-center">
           <nav className="flex gap-6">
-            <Link href="/dashboard" className="text-sm font-medium text-gray-700 hover:text-black">
+            <Link href="/dashboard" className="text-sm font-medium text-purple-300 hover:text-purple-100">
               Dashboard
             </Link>
-            <Link href="/wardrobe" className="text-sm font-medium text-gray-700 hover:text-black">
+            <Link href="/wardrobe" className="text-sm font-medium text-purple-300 hover:text-purple-100">
               Wardrobe
             </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-black">
+            <Link href="/pricing" className="text-sm font-medium text-purple-300 hover:text-purple-100">
               Upgrade
             </Link>
           </nav>
@@ -51,99 +59,61 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Today's Outfit</h1>
-          <p className="text-gray-600">Get personalized outfit recommendations based on weather and your style</p>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent mb-2">Today's Outfit</h1>
+          <p className="text-purple-200">Get personalized outfit recommendations based on weather and your style</p>
         </div>
 
         {/* Placeholder Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Outfit Card */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Your AI-Recommended Outfit</h2>
-
-              <div className="grid grid-cols-4 gap-4 mb-8">
-                {["Top", "Bottom", "Shoes", "Accessory"].map((item) => (
-                  <div key={item} className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-                    <div className="text-4xl mb-2">👕</div>
-                    <p className="text-sm text-gray-600 text-center">{item}</p>
-                  </div>
-                ))}
+            <div className="bg-gradient-to-br from-purple-900/50 to-slate-900/50 rounded-xl shadow-lg p-8 border border-purple-500/30 backdrop-blur-sm">
+              <div className="aspect-square bg-gradient-to-br from-purple-800/30 to-slate-800/30 rounded-lg flex items-center justify-center mb-6 border border-purple-500/20">
+                <div className="text-center">
+                  <div className="text-6xl mb-4">👗</div>
+                  <p className="text-purple-300">Add items to your wardrobe to get started</p>
+                </div>
               </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-blue-900">
-                  <strong>AI Insight:</strong> This outfit combines comfort with style. Perfect for a casual day out with friends!
-                </p>
-              </div>
-
-              <div className="flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-colors">
-                  Save Outfit
-                </button>
-                <button className="flex-1 px-6 py-3 border-2 border-black text-black rounded-lg font-bold hover:bg-black hover:text-white transition-colors">
-                  Get Another
-                </button>
-              </div>
+              <h2 className="text-2xl font-bold text-purple-100 mb-4">Curated for You</h2>
+              <p className="text-purple-200 mb-6">Start by adding items to your wardrobe. ALT FIT will then create personalized outfit combinations.</p>
+              <Link href="/wardrobe" className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-600 transition-all">
+                Add to Wardrobe
+              </Link>
             </div>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Weather Card */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-              <h3 className="font-bold text-gray-900 mb-4">Today's Weather</h3>
-              <div className="text-center">
-                <div className="text-5xl mb-2">☀️</div>
-                <p className="text-2xl font-bold text-gray-900">72°F</p>
-                <p className="text-sm text-gray-600">Sunny & Warm</p>
+            {/* Stats Card */}
+            <div className="bg-gradient-to-br from-purple-900/50 to-slate-900/50 rounded-xl shadow-lg p-6 border border-purple-500/30 backdrop-blur-sm">
+              <h3 className="text-lg font-bold text-purple-100 mb-4">Your Stats</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-purple-300 text-sm mb-1">Wardrobe Items</p>
+                  <p className="text-3xl font-bold text-purple-200">0</p>
+                </div>
+                <div>
+                  <p className="text-purple-300 text-sm mb-1">Outfits Created</p>
+                  <p className="text-3xl font-bold text-purple-200">0</p>
+                </div>
+                <div>
+                  <p className="text-purple-300 text-sm mb-1">Current Plan</p>
+                  <p className="text-xl font-bold text-purple-300">Free</p>
+                </div>
               </div>
             </div>
 
-            {/* Style Score */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-              <h3 className="font-bold text-gray-900 mb-4">Style Score</h3>
-              <div className="space-y-3">
-                {[
-                  { label: "Comfort", value: 85 },
-                  { label: "Trend", value: 72 },
-                  { label: "Versatility", value: 90 },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-700">{item.label}</span>
-                      <span className="font-bold text-gray-900">{item.value}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-black rounded-full h-2 transition-all"
-                        style={{ width: `${item.value}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            {/* Upgrade Card */}
+            <div className="bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl shadow-lg p-6 border border-purple-400/50">
+              <h3 className="text-lg font-bold text-white mb-2">Upgrade to Pro</h3>
+              <p className="text-purple-100 text-sm mb-4">Unlock unlimited recommendations and advanced AI insights.</p>
+              <Link href="/pricing" className="block text-center px-4 py-2 bg-white text-purple-700 rounded-lg font-semibold hover:bg-purple-50 transition-all">
+                View Plans
+              </Link>
             </div>
-
-            {/* Upgrade CTA */}
-            <Link
-              href="/pricing"
-              className="block bg-gradient-to-br from-black to-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 text-white text-center hover:shadow-xl transition-shadow"
-            >
-              <p className="font-bold mb-2">Unlock Premium</p>
-              <p className="text-sm text-gray-200 mb-4">Get unlimited recommendations & AI insights</p>
-              <button className="w-full px-4 py-2 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-500 transition-colors">
-                Upgrade Now
-              </button>
-            </Link>
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="py-8 border-t border-gray-200 text-center text-gray-500 text-sm bg-white mt-16">
-        &copy; {new Date().getFullYear()} My Wardrobe AI. All rights reserved.
-      </footer>
     </div>
   );
 }

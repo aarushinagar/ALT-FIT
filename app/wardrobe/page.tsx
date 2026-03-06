@@ -3,6 +3,7 @@ import { useUser, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Wardrobe() {
   const { isLoaded, isSignedIn } = useUser();
@@ -17,10 +18,10 @@ export default function Wardrobe() {
 
   if (!isLoaded || !isSignedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 to-purple-900">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>
+          <p className="mt-4 text-purple-200">Loading...</p>
         </div>
       </div>
     );
@@ -30,21 +31,28 @@ export default function Wardrobe() {
   const items: any[] = []; // Empty wardrobe for now
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900">
       {/* Header */}
-      <header className="bg-white shadow-sm h-16 flex justify-between px-6 items-center border-b border-gray-200">
-        <Link href="/" className="text-2xl font-bold text-black">
-          My Wardrobe AI
+      <header className="bg-black/40 backdrop-blur-md shadow-sm h-16 flex justify-between px-6 items-center border-b border-purple-500/20">
+        <Link href="/" className="flex items-center gap-2">
+          <Image 
+            src="/logo.webp" 
+            alt="ALT FIT Logo" 
+            width={32} 
+            height={32}
+            className="w-8 h-8"
+          />
+          <span className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent">ALT FIT</span>
         </Link>
         <div className="flex gap-4 items-center">
           <nav className="flex gap-6">
-            <Link href="/dashboard" className="text-sm font-medium text-gray-700 hover:text-black">
+            <Link href="/dashboard" className="text-sm font-medium text-purple-300 hover:text-purple-100">
               Dashboard
             </Link>
-            <Link href="/wardrobe" className="text-sm font-medium text-gray-700 hover:text-black font-bold border-b-2 border-black">
+            <Link href="/wardrobe" className="text-sm font-medium text-purple-100 font-bold border-b-2 border-purple-400">
               Wardrobe
             </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-black">
+            <Link href="/pricing" className="text-sm font-medium text-purple-300 hover:text-purple-100">
               Upgrade
             </Link>
           </nav>
@@ -56,24 +64,24 @@ export default function Wardrobe() {
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Your Wardrobe</h1>
-            <p className="text-gray-600">Manage and organize your clothing collection</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent mb-2">Your Wardrobe</h1>
+            <p className="text-purple-200">Manage and organize your clothing collection</p>
           </div>
-          <button className="px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-colors">
+          <button className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-600 transition-all">
             + Add Item
           </button>
         </div>
 
-        {/* Filter Bar */}
+        {/* Category Filter */}
         <div className="mb-8 flex gap-2 flex-wrap">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setFilter(category.toLowerCase())}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
                 filter === category.toLowerCase()
-                  ? "bg-black text-white"
-                  : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400"
+                  ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white"
+                  : "bg-purple-900/50 text-purple-300 border border-purple-500/30 hover:border-purple-400/60"
               }`}
             >
               {category}
@@ -81,60 +89,36 @@ export default function Wardrobe() {
           ))}
         </div>
 
-        {/* Wardrobe Grid */}
+        {/* Items Grid or Empty State */}
         {items.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-lg p-16 border border-gray-200 text-center">
-            <div className="text-6xl mb-4">👕</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Your wardrobe is empty</h2>
-            <p className="text-gray-600 mb-6">Start by adding items to your wardrobe to get personalized outfit recommendations.</p>
-            <button className="px-8 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-colors">
+          <div className="bg-gradient-to-br from-purple-900/50 to-slate-900/50 rounded-xl shadow-lg p-16 border border-purple-500/30 backdrop-blur-sm text-center">
+            <div className="text-6xl mb-4">👔</div>
+            <h2 className="text-2xl font-bold text-purple-100 mb-2">Your wardrobe is empty</h2>
+            <p className="text-purple-300 mb-6 max-w-md mx-auto">
+              Start building your wardrobe by adding clothing items. ALT FIT will then create personalized outfit recommendations for you.
+            </p>
+            <button className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-600 transition-all inline-block">
               Add Your First Item
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {items.map((item: any, idx: number) => (
-              <div key={idx} className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow">
-                <div className="aspect-square bg-gray-100 rounded-lg mb-3 flex items-center justify-center">
-                  <span className="text-3xl">👕</span>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {items.map((item, index) => (
+              <div key={index} className="bg-gradient-to-br from-purple-900/50 to-slate-900/50 rounded-lg shadow-md p-4 border border-purple-500/30 hover:border-purple-400/60 transition-all cursor-pointer">
+                <div className="aspect-square bg-gradient-to-br from-purple-800/30 to-slate-800/30 rounded-md mb-3 flex items-center justify-center border border-purple-500/20">
+                  <span className="text-4xl">👕</span>
                 </div>
-                <p className="font-medium text-gray-900 text-sm">{item.name}</p>
-                <p className="text-xs text-gray-500">{item.category}</p>
+                <h3 className="text-sm font-semibold text-purple-100">{item.name}</h3>
+                <p className="text-xs text-purple-400">{item.category}</p>
               </div>
             ))}
           </div>
         )}
-
-        {/* Tips Section */}
-        <div className="mt-16 bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Tips for Building Your Wardrobe</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Start with Basics",
-                desc: "Build a foundation with neutral colors and classic pieces that mix and match easily.",
-              },
-              {
-                title: "Add Your Style",
-                desc: "Incorporate pieces that reflect your personal style and make you feel confident.",
-              },
-              {
-                title: "Quality Over Quantity",
-                desc: "Invest in well-made pieces that will last longer and look better over time.",
-              },
-            ].map((tip, idx) => (
-              <div key={idx} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 className="font-bold text-gray-900 mb-2">{tip.title}</h3>
-                <p className="text-sm text-gray-600">{tip.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </main>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-gray-200 text-center text-gray-500 text-sm bg-white mt-16">
-        &copy; {new Date().getFullYear()} My Wardrobe AI. All rights reserved.
+      <footer className="py-8 border-t border-purple-500/20 text-center text-purple-300 text-sm bg-black/20 backdrop-blur-sm mt-16">
+        &copy; {new Date().getFullYear()} ALT FIT. All rights reserved.
       </footer>
     </div>
   );

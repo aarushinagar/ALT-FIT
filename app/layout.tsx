@@ -6,8 +6,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Wardrobe - AI Fashion Assistant",
-  description: "Personal fashion assistant with AI insights and subscription features.",
+  title: "ALT FIT - AI Fashion Assistant",
+  description: "Discover your perfect style with ALT FIT. AI-powered outfit recommendations, wardrobe management, and personalized fashion insights.",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={`${inter.className} bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900`}>{children}</body>
       </html>
     </ClerkProvider>
   );
