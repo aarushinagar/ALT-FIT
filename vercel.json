@@ -2,19 +2,5 @@
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
   "devCommand": "pnpm dev",
-  "framework": "nextjs",
-  "env": {
-    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": {
-      "description": "Clerk Publishable Key"
-    },
-    "CLERK_SECRET_KEY": {
-      "description": "Clerk Secret Key"
-    },
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": {
-      "description": "Stripe Publishable Key"
-    },
-    "STRIPE_SECRET_KEY": {
-      "description": "Stripe Secret Key"
-    }
-  }
+  "framework": "nextjs"
 }
