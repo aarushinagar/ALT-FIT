@@ -5,10 +5,18 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Set default Clerk key if not provided
+const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_placeholder";
+
 export const metadata: Metadata = {
   title: "ALT FIT - AI Fashion Assistant",
   description: "Discover your perfect style with ALT FIT. AI-powered outfit recommendations, wardrobe management, and personalized fashion insights.",
 };
+
+// Ensure Clerk is configured
+if (!clerkPublishableKey || clerkPublishableKey === "pk_test_placeholder") {
+  console.warn("Clerk publishable key not configured. Authentication features will be limited.");
+}
 
 export default function RootLayout({
   children,
@@ -16,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={clerkPublishableKey}>
       <html lang="en">
         <body className={`${inter.className} bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900`}>{children}</body>
       </html>
