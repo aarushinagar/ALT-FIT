@@ -7,9 +7,9 @@ import Image from "next/image";
 const PLANS = [
   {
     id: "free",
-    name: "Free",
+    name: "Starter",
     price: "$0",
-    description: "Perfect for getting started",
+    description: "Perfect for exploring your style",
     features: [
       "5 outfit recommendations per month",
       "Basic wardrobe management",
@@ -64,156 +64,189 @@ export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900">
-      {/* Header */}
-      <header className="bg-black/40 backdrop-blur-md shadow-sm h-16 flex justify-between px-6 items-center border-b border-purple-500/20">
-        <Link href="/" className="flex items-center gap-2">
-          <Image 
-            src="/logo.webp" 
-            alt="ALT FIT Logo" 
-            width={32} 
-            height={32}
-            className="w-8 h-8"
-          />
-          <span className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent">ALT FIT</span>
-        </Link>
-        <div>
-          {!isSignedIn && (
-            <Link href="/sign-in" className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-purple-500 text-white text-sm font-medium hover:from-purple-700 hover:to-purple-600 transition-all">
-              Login
-            </Link>
-          )}
+    <div className="min-h-screen bg-black text-white overflow-hidden">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-purple-500/10">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+            <Image src="/logo.webp" alt="ALT FIT" width={32} height={32} className="w-8 h-8" />
+            <span className="text-xl font-black tracking-tighter bg-gradient-to-r from-purple-400 to-purple-200 bg-clip-text text-transparent">ALT FIT</span>
+          </Link>
+          <Link href="/" className="text-purple-300 hover:text-purple-100 transition">Back</Link>
         </div>
-      </header>
+      </nav>
+
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-40 left-10 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-40 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl opacity-30 animate-pulse" style={{animationDelay: "1s"}}></div>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-16">
+      <main className="relative z-10 max-w-7xl mx-auto px-6 py-32">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent mb-4">
-            Simple, Transparent Pricing
+        <div className="text-center mb-20">
+          <h1 className="text-6xl md:text-7xl font-black tracking-tight mb-6">
+            <span className="bg-gradient-to-r from-purple-300 via-purple-200 to-purple-100 bg-clip-text text-transparent">Pricing That Scales With You</span>
           </h1>
-          <p className="text-xl text-purple-200 max-w-2xl mx-auto">
-            Choose the perfect plan for your style journey. Upgrade or downgrade anytime.
+          <p className="text-xl text-purple-200/70 max-w-2xl mx-auto mb-12">
+            Choose the perfect plan for your style journey. Upgrade or downgrade anytime, no questions asked.
           </p>
-        </div>
 
-        {/* Billing Toggle */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex rounded-lg bg-purple-900/50 border border-purple-500/30 p-1">
+          {/* Billing Toggle */}
+          <div className="flex justify-center gap-4">
             <button
               onClick={() => setBillingCycle("monthly")}
-              className={`px-6 py-2 rounded-md font-semibold transition-all ${
+              className={`px-6 py-3 rounded-full font-bold transition-all ${
                 billingCycle === "monthly"
-                  ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white"
-                  : "text-purple-300 hover:text-purple-100"
+                  ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white shadow-lg shadow-purple-500/50"
+                  : "text-purple-300 hover:text-purple-100 border border-purple-500/30"
               }`}
             >
-              Monthly
+              Monthly Billing
             </button>
             <button
               onClick={() => setBillingCycle("annual")}
-              className={`px-6 py-2 rounded-md font-semibold transition-all ${
+              className={`px-6 py-3 rounded-full font-bold transition-all relative ${
                 billingCycle === "annual"
-                  ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white"
-                  : "text-purple-300 hover:text-purple-100"
+                  ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white shadow-lg shadow-purple-500/50"
+                  : "text-purple-300 hover:text-purple-100 border border-purple-500/30"
               }`}
             >
-              Annual
-              <span className="ml-2 text-xs bg-purple-600/50 px-2 py-1 rounded">Save 20%</span>
+              Annual Billing
+              {billingCycle === "annual" && (
+                <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-purple-400 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                  Save 20%
+                </span>
+              )}
             </button>
           </div>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-3 gap-8 mb-20">
           {PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`rounded-xl shadow-lg overflow-hidden transition-all duration-300 ${
-                plan.highlighted
-                  ? "md:scale-105 bg-gradient-to-br from-purple-600 to-purple-800 border-2 border-purple-400"
-                  : "bg-gradient-to-br from-purple-900/50 to-slate-900/50 border border-purple-500/30 backdrop-blur-sm"
+              className={`relative group rounded-2xl transition-all duration-300 ${
+                plan.highlighted ? "md:scale-105" : ""
               }`}
             >
+              {/* Background */}
+              <div
+                className={`absolute inset-0 rounded-2xl transition-all duration-300 ${
+                  plan.highlighted
+                    ? "bg-gradient-to-br from-purple-600/40 to-purple-900/40 border border-purple-400/60 shadow-2xl shadow-purple-500/30"
+                    : "bg-gradient-to-br from-purple-900/30 to-purple-950/30 border border-purple-500/20 group-hover:border-purple-400/50 group-hover:shadow-xl group-hover:shadow-purple-500/20"
+                }`}
+              ></div>
+
+              {/* Badge */}
               {plan.highlighted && (
-                <div className="bg-gradient-to-r from-purple-400 to-purple-300 text-purple-900 text-center py-2 font-bold text-sm">
-                  MOST POPULAR
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <span className="bg-gradient-to-r from-purple-500 to-purple-400 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
+                    Most Popular
+                  </span>
                 </div>
               )}
 
-              <div className="p-8">
-                <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? "text-white" : "text-purple-100"}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-sm mb-6 ${plan.highlighted ? "text-purple-100" : "text-purple-300"}`}>
-                  {plan.description}
-                </p>
-
-                <div className="mb-6">
-                  <span className={`text-4xl font-bold ${plan.highlighted ? "text-white" : "text-purple-200"}`}>
-                    {plan.price}
-                  </span>
-                  {plan.period && (
-                    <span className={plan.highlighted ? "text-purple-100" : "text-purple-300"}>
-                      {plan.period}
-                    </span>
-                  )}
+              {/* Content */}
+              <div className="relative p-8 h-full flex flex-col backdrop-blur-xl">
+                <div className="mb-8">
+                  <h3 className="text-2xl font-black text-purple-100 mb-2">{plan.name}</h3>
+                  <p className="text-purple-300/70 text-sm">{plan.description}</p>
                 </div>
 
+                {/* Price */}
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-5xl font-black text-purple-100">{plan.price}</span>
+                    {plan.period && <span className="text-purple-300/60">{plan.period}</span>}
+                  </div>
+                </div>
+
+                {/* CTA Button */}
                 <Link
                   href={plan.ctaLink}
-                  className={`block w-full text-center py-3 rounded-lg font-semibold mb-8 transition-all ${
+                  className={`w-full py-3 rounded-full font-bold text-center transition-all duration-300 mb-8 ${
                     plan.highlighted
-                      ? "bg-white text-purple-700 hover:bg-purple-50"
-                      : "bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600"
+                      ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-500 hover:to-purple-400 shadow-lg hover:shadow-purple-500/50 transform hover:scale-105"
+                      : "border border-purple-500/50 text-purple-300 hover:bg-purple-500/10 hover:border-purple-400"
                   }`}
                 >
                   {plan.cta}
                 </Link>
 
-                <div className="space-y-4">
-                  {plan.features.map((feature, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <span className={`text-lg ${plan.highlighted ? "text-white" : "text-purple-400"}`}>✓</span>
-                      <span className={plan.highlighted ? "text-white" : "text-purple-200"}>
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
+                {/* Features */}
+                <div className="flex-grow">
+                  <ul className="space-y-3">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3 text-purple-200/80">
+                        <span className="text-purple-400 font-bold mt-0.5">✓</span>
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
+        {/* Trust Section */}
+        <div className="grid md:grid-cols-3 gap-8 mb-20">
+          {[
+            { icon: "🔒", title: "Secure Payments", desc: "Your payment information is encrypted and secure" },
+            { icon: "⚡", title: "Instant Activation", desc: "Start using premium features immediately" },
+            { icon: "🔄", title: "Flexible Plans", desc: "Change or cancel your plan anytime" }
+          ].map((item, i) => (
+            <div key={i} className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-900/30 to-purple-950/30 border border-purple-500/20 hover:border-purple-400/50 transition-all backdrop-blur-xl">
+              <div className="text-4xl mb-3">{item.icon}</div>
+              <h3 className="font-bold text-purple-100 mb-2">{item.title}</h3>
+              <p className="text-purple-300/70 text-sm">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
         {/* FAQ Section */}
-        <div className="bg-gradient-to-br from-purple-900/50 to-slate-900/50 rounded-xl shadow-lg p-8 border border-purple-500/30 backdrop-blur-sm">
-          <h2 className="text-3xl font-bold text-purple-100 mb-8 text-center">Frequently Asked Questions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-lg font-bold text-purple-200 mb-2">Can I change plans anytime?</h3>
-              <p className="text-purple-300">Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-purple-200 mb-2">Is there a free trial?</h3>
-              <p className="text-purple-300">Yes! Start with our Free plan and upgrade whenever you're ready.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-purple-200 mb-2">What payment methods do you accept?</h3>
-              <p className="text-purple-300">We accept all major credit cards through our secure Stripe payment processor.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-purple-200 mb-2">Do you offer refunds?</h3>
-              <p className="text-purple-300">We offer a 7-day money-back guarantee on all paid plans.</p>
-            </div>
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-black text-center mb-12">
+            <span className="bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent">Frequently Asked Questions</span>
+          </h2>
+
+          <div className="space-y-4">
+            {[
+              {
+                q: "Can I change plans anytime?",
+                a: "Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately."
+              },
+              {
+                q: "Is there a free trial?",
+                a: "Yes! Start with our Starter plan and upgrade whenever you're ready. No credit card required."
+              },
+              {
+                q: "What payment methods do you accept?",
+                a: "We accept all major credit cards through our secure payment processor."
+              },
+              {
+                q: "Do you offer refunds?",
+                a: "We offer a 7-day money-back guarantee on all paid plans. No questions asked."
+              }
+            ].map((item, i) => (
+              <div key={i} className="bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-xl p-6 border border-purple-500/20 hover:border-purple-400/50 transition-all backdrop-blur-xl">
+                <h3 className="font-bold text-purple-100 mb-2">{item.q}</h3>
+                <p className="text-purple-300/70 text-sm">{item.a}</p>
+              </div>
+            ))}
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-purple-500/20 text-center text-purple-300 text-sm bg-black/20 backdrop-blur-sm mt-16">
-        &copy; {new Date().getFullYear()} ALT FIT. All rights reserved.
+      <footer className="relative z-10 border-t border-purple-500/10 py-12 px-6 bg-black/50 backdrop-blur-xl mt-20">
+        <div className="max-w-6xl mx-auto text-center text-sm text-purple-300/50">
+          <p>&copy; 2026 ALT FIT. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
