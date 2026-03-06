@@ -141,6 +141,11 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-8 border-t border-purple-500/20 text-center text-purple-300 text-sm bg-black/20 backdrop-blur-sm">
+        <div className="flex flex-col md:flex-row justify-center gap-6 mb-4">
+          <Link href="/terms" className="hover:text-purple-100 transition-colors">Terms and Conditions</Link>
+          <Link href="/privacy" className="hover:text-purple-100 transition-colors">Privacy Policy</Link>
+          <Link href="/contact" className="hover:text-purple-100 transition-colors">Contact Us</Link>
+        </div>
         &copy; {new Date().getFullYear()} ALT FIT. All rights reserved.
       </footer>
     </div>
